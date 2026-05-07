@@ -20,7 +20,6 @@
     "express-validator": "latest",
     "helmet": "latest",
     "jsonwebtoken": "latest",
-    "mariadb": "^3.5.2",
     "mercadopago": "latest",
     "multer": "^2.1.1",
     "mysql2": "latest",
