@@ -13,6 +13,12 @@ import { productsRouter } from "./routes/products.js";
 
 export const app = express();
 
+// Behind Railway / reverse proxies the client IP is in X-Forwarded-For.
+// express-rate-limit requires this or it throws ERR_ERL_UNEXPECTED_X_FORWARDED_FOR.
+if (env.nodeEnv === "production") {
+  app.set("trust proxy", 1);
+}
+
 const allowedOrigins = new Set([env.clientUrl, ...env.clientUrls]);
 
 app.use(helmet());
