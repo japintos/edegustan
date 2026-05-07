@@ -26,7 +26,15 @@ if (env.nodeEnv === "production") {
 
 const allowedOrigins = new Set([env.clientUrl, ...env.clientUrls]);
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "img-src": ["'self'", "data:", "blob:", "https:"]
+      }
+    }
+  })
+);
 app.use((req, res, next) => {
   const rawFwd =
     typeof req.headers["x-forwarded-host"] === "string" ? req.headers["x-forwarded-host"].split(",")[0]?.trim() ?? "" : "";
