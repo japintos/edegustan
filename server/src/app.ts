@@ -27,16 +27,31 @@ if (env.nodeEnv === "production") {
 const allowedOrigins = new Set([env.clientUrl, ...env.clientUrls]);
 
 app.use(helmet());
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.has(origin)) {
-      return callback(null, true);
-    }
+app.use((req, res, next) => {
+  const rawFwd =
+    typeof req.headers["x-forwarded-host"] === "string" ? req.headers["x-forwarded-host"].split(",")[0]?.trim() ?? "" : "";
+  const fromHeader = (req.headers.host ?? "").replace(/:\d+$/, "");
+  const requestHost = (rawFwd || fromHeader).replace(/:\d+$/, "");
 
-    return callback(new Error(`Origen no permitido por CORS: ${origin}`));
-  },
-  credentials: true
-}));
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+      try {
+        const { hostname } = new URL(origin);
+        if (requestHost && hostname === requestHost) {
+          return callback(null, true);
+        }
+      } catch {
+        /* ignore */
+      }
+
+      return callback(new Error(`Origen no permitido por CORS: ${origin}`));
+    },
+    credentials: true
+  })(req, res, next);
+});
 app.use(express.json({ limit: "1mb" }));
 app.use(rateLimit({ windowMs: 60_000, limit: 120 }));
 

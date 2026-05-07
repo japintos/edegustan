@@ -90,7 +90,7 @@ Configuracion recomendada:
 - Build: `npm ci` (o `npm install`) y `npm run build`.
 - Start: `npm run start`.
 - `NODE_ENV=production` (Railway lo suele setear solo).
-- Variables de base y JWT como siempre. En el mismo dominio publico, define `CLIENT_URL` con la URL HTTPS del servicio (ej. `https://TU_APP.up.railway.app`) para CORS, enlaces en mails y Mercado Pago.
+- Variables de base y JWT como siempre. Para **CORS**, si la web y la API comparten el mismo host (deploy unificado), el servidor permite automaticamente ese origen aunque `CLIENT_URL` siga apuntando a localhost en variables. **Igual conviene** definir `CLIENT_URL` con la URL HTTPS publica del servicio (ej. `https://TU_APP.up.railway.app`) para enlaces en mails y Mercado Pago.
 - No hace falta `VITE_API_URL` en el build si la web y la API comparten el mismo origen: el cliente usa `/api` automaticamente en produccion.
 
 Si alguna vez desplegas el frontend en otro dominio (CDN, otro servicio), ahi si usa `VITE_API_URL` apuntando a la API publica.
