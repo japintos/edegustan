@@ -35,6 +35,13 @@ app.use(cors({
 app.use(express.json({ limit: "1mb" }));
 app.use(rateLimit({ windowMs: 60_000, limit: 120 }));
 
+app.get("/", (_req, res) =>
+  res.json({
+    name: "Degustan Drink-Store API",
+    message: "Este servicio solo expone la API bajo /api. La tienda (React) debe desplegarse aparte.",
+    health: "/api/health"
+  })
+);
 app.get("/api/health", (_req, res) => res.json({ ok: true, name: "Degustan Drink-Store API" }));
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
