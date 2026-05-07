@@ -1,4 +1,10 @@
-const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
+const configuredApi = import.meta.env.VITE_API_URL;
+const API_URL =
+  configuredApi != null && String(configuredApi).trim() !== ""
+    ? String(configuredApi).replace(/\/$/, "")
+    : import.meta.env.DEV
+      ? "http://localhost:4000/api"
+      : "/api";
 
 export const getToken = () => localStorage.getItem("degustan_token");
 export const setToken = (token: string) => localStorage.setItem("degustan_token", token);

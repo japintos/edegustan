@@ -76,9 +76,24 @@ La API queda en `http://localhost:4000/api` y el frontend en `http://localhost:5
 ```bash
 npm run dev       # API + web
 npm run build     # Compila backend y frontend
-npm run start     # Ejecuta API compilada
+npm run start     # Servidor unificado (API + web si NODE_ENV=production y existe client/dist)
 npm run lint      # Lint del frontend
 ```
+
+## Despliegue unificado (Railway u otro host)
+
+Con un solo servicio Node desde la raiz del repo: `npm run build` genera `server/dist` y `client/dist`, y `npm run start` sirve la API bajo `/api/*` y el ecommerce React en `/` (fallback SPA).
+
+Configuracion recomendada:
+
+- Directorio raiz del proyecto en el proveedor: raiz del monorepo (donde esta el `package.json` principal).
+- Build: `npm ci` (o `npm install`) y `npm run build`.
+- Start: `npm run start`.
+- `NODE_ENV=production` (Railway lo suele setear solo).
+- Variables de base y JWT como siempre. En el mismo dominio publico, define `CLIENT_URL` con la URL HTTPS del servicio (ej. `https://TU_APP.up.railway.app`) para CORS, enlaces en mails y Mercado Pago.
+- No hace falta `VITE_API_URL` en el build si la web y la API comparten el mismo origen: el cliente usa `/api` automaticamente en produccion.
+
+Si alguna vez desplegas el frontend en otro dominio (CDN, otro servicio), ahi si usa `VITE_API_URL` apuntando a la API publica.
 
 ## Endpoints principales
 
