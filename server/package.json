@@ -1,0 +1,42 @@
+{
+  "name": "@degustan/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@mercadopago/sdk-js": "latest",
+    "bcryptjs": "latest",
+    "cloudinary": "^2.10.0",
+    "cors": "latest",
+    "dotenv": "latest",
+    "express": "latest",
+    "express-rate-limit": "latest",
+    "express-validator": "latest",
+    "helmet": "latest",
+    "jsonwebtoken": "latest",
+    "mariadb": "^3.5.2",
+    "mercadopago": "latest",
+    "multer": "^2.1.1",
+    "mysql2": "latest",
+    "nodemailer": "latest",
+    "sequelize": "latest",
+    "slugify": "latest"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "latest",
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/jsonwebtoken": "latest",
+    "@types/multer": "^2.1.0",
+    "@types/node": "latest",
+    "@types/nodemailer": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}
